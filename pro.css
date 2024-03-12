@@ -135,7 +135,7 @@ ul.menu {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 5px;
   width: 70%;
   padding: 1% 2%;
@@ -172,7 +172,7 @@ ul.menu {
   text-decoration: none;
   color: #000;
   text-transform: uppercase;
-  padding: 1px;
+  padding: 6px;
   cursor: pointer;
   background-color: #5eeafd;
   font-size: 16px;
@@ -338,7 +338,7 @@ ul.menu {
     flex-flow: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
+    width: 20%;
   }
 
   .banner-text-item .form input,
