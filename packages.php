@@ -1,25 +1,41 @@
 <?php
-// Establish database connection
-$conn = mysqli_connect('host', 'username', 'password', 'database');
+// PHP code to connect to the database and fetch package details
+$servername = "127.0.0.1";
+$username = "root"; // Replace with your MySQL username
+$password = ""; // Replace with your MySQL password
+$dbname = "travel_agency"; // Replace with your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Query to fetch details including image from the database (replace 'your_table' with your actual table name)
-$sql = "SELECT * FROM your_table WHERE id = 1"; // Assuming you want details for a specific ID (e.g., 1)
-$result = mysqli_query($conn, $sql);
+// SQL query to fetch package details
+$sql = "SELECT * FROM packages WHERE package_id = 1"; // Change the condition as needed
 
-if (mysqli_num_rows($result) > 0) {
-    $row = mysqli_fetch_assoc($result);
-    // Output JSON data
-    header('Content-Type: application/json');
-    echo json_encode($row);
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of the first row (assuming there's only one result)
+    $row = $result->fetch_assoc();
+    $package_details = array(
+        'package_name' => $row["package_name"],
+        'description' => $row["description"],
+        'price' => $row["price"],
+        'duration' => $row["duration"],
+        'destination' => $row["destination"],
+        'departure_date' => $row["departure_date"],
+        'image_url' => $row["image_url"]
+    );
 } else {
-    echo "No details found.";
+    echo "0 results";
 }
 
-// Close database connection
-mysqli_close($conn);
+$conn->close();
+
+// Convert package details array to JSON format
+echo json_encode($package_details);
 ?>
