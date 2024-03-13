@@ -1,31 +1,51 @@
 <?php
-// Include the database connection file
-include 'connection.php';
+// Database connection parameters
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "travel_agency";
 
-// Check if form data has been submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect data from the form
-    
-    $dest = $_POST['destination'];
-    $images = $_POST['images'];
-    $baseprice = $_POST['base-price'];
-    $persons = $_POST['persons'];
-    $totalprice = $_POST['total-price'];
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // SQL query to insert data into the 'menu' table
-    $sql_insert = "INSERT INTO packages (item, price,Category) VALUES ('$item', '$price','$item_number')";
-
-    // Perform the insertion
-    if ($connect->query($sql_insert) === TRUE) {
-        echo "<script>alert('package added succesfully added succesfully.');</script>";
-    echo "<script>window.location.href='adminpage.php';</script>";
-        exit();
-    } else {
-        // Handle errors if the insertion fails
-        echo "Error: " . $sql_insert . "<br>" . $connect->error;
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Close the database connection
-$connect->close();
+// Get data from form
+$package_id = $_POST['package-id']; // Retrieve package ID from the form
+$package_name = $_POST['package-name'];
+$description = $_POST['description'];
+$price = $_POST['price'];
+$duration = $_POST['duration'];
+$destination = $_POST['destination'];
+$departure_date = $_POST['departure-date'];
+$image_url = $_POST['image-url'];
+
+// Check if package ID already exists
+$check_sql = "SELECT * FROM packages WHERE package_id = '$package_id'";
+$check_result = $conn->query($check_sql);
+
+if ($check_result->num_rows > 0) {
+    // Package ID already exists
+    // Close the database connection
+    $conn->close();
+    // Show error message and redirect
+    echo "<script>alert('Package ID already exists!'); window.location='packadd.html';</script>";
+} else {
+    // Package ID does not exist, proceed with insertion
+    // Prepare SQL statement to insert data into packages table
+    $sql = "INSERT INTO packages (package_id, package_name, description, price, duration, destination, departure_date, image_url) 
+            VALUES ('$package_id', '$package_name', '$description', '$price', '$duration', '$destination', '$departure_date', '$image_url')";
+
+    if ($conn->query($sql) === TRUE) {
+        // Close the database connection
+        $conn->close();
+        // Show success message and redirect
+        echo "<script>alert('New package added successfully!'); window.location='packadd.html';</script>";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
 ?>

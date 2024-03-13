@@ -36,6 +36,10 @@
   <div class="container">
     <form class="travel-form" action="packadd.php" method="post">
       <div class="input-group">
+        <label for="package-id">Package ID:</label>
+        <input type="text" id="package-id" name="package-id" required>
+      </div>
+      <div class="input-group">
         <label for="package-name">Package Name:</label>
         <input type="text" id="package-name" name="package-name" required>
       </div>
@@ -66,15 +70,5 @@
       <button type="submit">Add Package</button>
     </form>
   </div>
-
-  <script>
-    function calculateTotalPrice() {
-      const basePrice = parseFloat(document.getElementById('base-price').value);
-      const persons = parseInt(document.getElementById('persons').value);
-      const totalPrice = basePrice * persons;
-
-      document.getElementById('total-price').value = totalPrice.toFixed(2);
-    }
-  </script>
 </body>
 </html>
