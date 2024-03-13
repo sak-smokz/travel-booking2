@@ -9,6 +9,10 @@ body, h1, h2, h3, p, ul {
 
 body {
   font-family: Arial, sans-serif;
+  background-color: #f2f2f2; /* Fallback color if background image is unavailable */
+  background-image: url('photos/addpackages.jpg'); /* Add your background image URL here */
+  background-size: cover; /* Cover the entire viewport */
+  background-position: center; /* Center the background image */
 }
 
 
@@ -157,8 +161,8 @@ h2 {
 }
 
 .travel-form {
-  background-color: #fff;
-  padding: 20px;
+  background-color: #ffffff20;
+  padding: 150px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
