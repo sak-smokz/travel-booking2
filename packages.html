@@ -11,7 +11,7 @@
     <div class="logo">Go Trip</div>
     <ul class="menu">
       <li><a href="pro.html">home</a></li>
-      <li><a href="#">tours</a></li>
+      <li><a href="booking.html">booking</a></li>
       <li><a href="#">package</a></li>
       <li><a href="#">blog</a></li>
       <li><a href="about_us.html">about us</a></li>
@@ -30,40 +30,36 @@
       </div>
     </section>
   </main>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Details from Database</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <div class="container">
-      <div class="package-details">
-          <img src="" alt="Package Image" id="package-image">
-          <h2 id="package-name"></h2>
-          <p id="description"></p>
-          <p id="price"></p>
-          <p id="duration"></p>
-          <p id="destination"></p>
-          <p id="departure-date"></p>
-      </div>
-  </div>
+  <body>
+    <div class="container">
+        <div class="package-details">
+            <?php
+                // Include the database connection file
+                include 'connection.php';
 
-  <!-- JavaScript to fetch data from the database -->
-  <script>
-      // JavaScript to fetch data from PHP file and update HTML content
-      fetch('fetch_package_details.php')
-          .then(response => response.json())
-          .then(data => {
-              document.getElementById('package-image').src = data.image_url;
-              document.getElementById('package-name').textContent = data.package_name;
-              document.getElementById('description').textContent = data.description;
-              document.getElementById('price').textContent = "Price: $" + data.price;
-              document.getElementById('duration').textContent = "Duration: " + data.duration + " days";
-              document.getElementById('destination').textContent = "Destination: " + data.destination;
-              document.getElementById('departure-date').textContent = "Departure Date: " + data.departure_date;
-          })
-          .catch(error => console.error('Error:', error));
-  </script>
+                // Query to fetch package details from the database
+                $sql = "SELECT * FROM packages";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        echo "<img src='" . $row["image_url"] . "' alt='Package Image'>";
+                        echo "<h2>" . $row["package_name"] . "</h2>";
+                        echo "<p>" . $row["description"] . "</p>";
+                        echo "<p>Price: $" . $row["price"] . "</p>";
+                        echo "<p>Duration: " . $row["duration"] . " days</p>";
+                        echo "<p>Destination: " . $row["destination"] . "</p>";
+                        echo "<p>Departure Date: " . $row["departure_date"] . "</p>";
+                    }
+                } else {
+                    echo "0 results";
+                }
+
+                // Close the database connection
+                $conn->close();
+            ?>
+        </div>
+    </div>
 </body>
 </html>
