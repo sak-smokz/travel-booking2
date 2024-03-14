@@ -23,11 +23,51 @@
   <header>
     <!-- Header content here -->
   </header>
+  <div class="registerdata-table">
+    
+    
+      <?php
+      $servername = "127.0.0.1";
+      $username = "root";
+      $password = " ";
+      $dbname = "travel_agency"; // your database name
+      
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      
+      if ($conn->connect_error) {
+          die("Connection failed: " . $conn->connect_error);
+      } 
+      
+      $sql = "SELECT * FROM packages";
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+        echo '<table border="1">';
+        echo '<tr><th>PackageID</th><th>Name</th><th>Description</th><th>Price</th><th>Duration</th><th>Destination Name</th><th>Departure Date</th><th>Image URL</th></tr>';
+
+        while ($row = $result->fetch_assoc()) {
+          echo '<tr>';
+          echo '<td>' . $row["PackageID"] . '</td>';
+          echo '<td>' . $row["Name"] . '</td>';
+          echo '<td>' . $row["Description"] . '</td>';
+          echo '<td>' . $row["Price"] . '</td>';
+          echo '<td>' . $row["Duration"] . '</td>';
+          echo '<td>' . $row["DestinationName"] . '</td>';
+          echo '<td>' . $row["Departure_date"] . '</td>';
+          echo '<td>' . $row["image_url"] . '</td>';
+          echo '</tr>';
+        }
+
+        echo '</table>';
+      } else {
+        echo 'No records found';
+      }
+      ?>
+    </div>
 
   <main>
     <section class="about">
       <div class="about-content">
-        <h2>Existing Packages</h2>
       </div>
     </section>
   </main>
@@ -39,7 +79,6 @@
 </head>
 <body>
     <div class="container">
-        <h1>Details from Database</h1>
         <div class="details">
             <div class="detail" id="detail">
                 <!-- Details will be filled in dynamically using JavaScript -->
