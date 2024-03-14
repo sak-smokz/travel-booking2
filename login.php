@@ -32,17 +32,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         
         // Verify password
-        if (password_verify($confirm_password, $user["password"])) {
+        if (password_verify($password, $user["password"])) {
             // Password is correct, redirect to dashboard or user home page
             header("Location: pro.html");
             exit();
         } else {
             // Password is incorrect
-            echo "Invalid password";
+            echo "<script>alert('Invalid password');</script>";
+            echo "<script>window.location.href = 'login.html';</script>";
+            exit(); // Stop further execution
         }
     } else {
         // User with the given email does not exist
-        echo "User not found";
+        echo "<script>alert('User not found');</script>";
+        echo "<script>window.location.href = 'login.html';</script>";
+        exit(); // Stop further execution
     }
 
     // Close statement
@@ -52,4 +56,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Close connection
 $conn->close();
 ?>
-

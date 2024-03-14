@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - Travel Agency</title>
+  <title>Travel Agency</title>
   <link rel="stylesheet" href="about_us.css"> <!-- Link to your CSS file -->
 </head>
 <body>
@@ -29,7 +29,7 @@
       <?php
       $servername = "127.0.0.1";
       $username = "root";
-      $password = " ";
+      $password = "";
       $dbname = "travel_agency"; // your database name
       
       $conn = new mysqli($servername, $username, $password, $dbname);
@@ -47,13 +47,13 @@
 
         while ($row = $result->fetch_assoc()) {
           echo '<tr>';
-          echo '<td>' . $row["PackageID"] . '</td>';
-          echo '<td>' . $row["Name"] . '</td>';
-          echo '<td>' . $row["Description"] . '</td>';
-          echo '<td>' . $row["Price"] . '</td>';
-          echo '<td>' . $row["Duration"] . '</td>';
-          echo '<td>' . $row["DestinationName"] . '</td>';
-          echo '<td>' . $row["Departure_date"] . '</td>';
+          echo '<td>' . $row["package_id"] . '</td>';
+          echo '<td>' . $row["package_name"] . '</td>';
+          echo '<td>' . $row["description"] . '</td>';
+          echo '<td>' . $row["price"] . '</td>';
+          echo '<td>' . $row["duration"] . '</td>';
+          echo '<td>' . $row["destination"] . '</td>';
+          echo '<td>' . $row["departure_date"] . '</td>';
           echo '<td>' . $row["image_url"] . '</td>';
           echo '</tr>';
         }
