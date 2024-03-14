@@ -3,29 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Package Booking</title>
-    <link rel="stylesheet" href="booking.css">
+    <title>Travel Packages Booking</title>
+    <link rel="stylesheet" href="booking.css"> <!-- Link to your CSS file -->
 </head>
 <body>
-    <div class="container">
-        <h1>Travel Package Booking</h1>
-        <div id="packages-list"></div>
-        <div id="booking-form" style="display: none;">
-            <h2>Book a Travel Package</h2>
-            <form>
-                <label for="package">Select Package:</label>
-                <select id="package" required></select>
+            <!--===========Nav Bar=================-->
+            <section class="nav-bar">
+                <div class="logo">Go Trip</div>
+                <ul class="menu">
+                    <li><a href="pro.html">home</a></li>
+                    <li><a href="#">booking</a></li>
+                    <li><a href="packages.php">package</a></li>
+                    <li><a href="about_us.html">about us</a></li>
+                    <li><a href="login.html">logout</a></li>
+                </ul>
+                </div>
+    
+            </section>
 
-                <label for="name">Your Name:</label>
-                <input type="text" id="name" required>
+    <h1>Booking portal</h1>
 
-                <label for="email">Your Email:</label>
-                <input type="email" id="email" required>
+    <form id="bookingForm" action="booking.php" method="post">
 
-                <button type="button" onclick="submitBooking()">Book Now</button>
-            </form>
+        <select id="package" name="package">
+            <option value="" disabled selected>Select a Package</option>
+            <option value="1">package 1</option>
+            <option value="2">package 2</option>
+            <option value="3">package 3</option>
+        </select>
+
+        <div id="packages-list" class="packages-list"></div>
+
+        <div id="booking-form" class="booking-form">
+            <h2>Booking Form</h2>
+            <label for="name">Travel Date:</label>
+            <input type="text" id="date" name="date" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <button type="button" onclick="submitBooking()">Submit Booking</button>
         </div>
-    </div>
-    <script src="scripts.js"></script>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const packages = [
+                
+            ];
+
+            const packageSelect = document.getElementById("package");
+            const packagesList = document.getElementById("packages-list");
+
+            packages.forEach(package => {
+                const option = document.createElement("option");
+                option.value = package.id;
+                option.text = `${package.name} - $${package.price}`;
+                packageSelect.appendChild(option);
+
+                const packageItem = document.createElement("div");
+                packageItem.classList.add("package-item"); // Add CSS class
+                packageItem.innerHTML = `<strong>${package.name}</strong> - $${package.price}`;
+                packagesList.appendChild(packageItem);
+            });
+
+            packageSelect.addEventListener("change", function () {
+                document.getElementById("booking-form").style.display = "block";
+            });
+        });
+
+        function submitBooking() {
+            const selectedPackageId = document.getElementById("package").value;
+            const packageName = document.getElementById("package").options[document.getElementById("package").selectedIndex].text;
+            const userName = document.getElementById("name").value;
+            const userEmail = document.getElementById("email").value;
+
+            alert(`Booking Confirmed!\nPackage: ${packageName}\nName: ${userName}\nEmail: ${userEmail}`);
+        }
+    </script>
+
 </body>
 </html>
